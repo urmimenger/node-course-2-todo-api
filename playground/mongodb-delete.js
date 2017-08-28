@@ -10,12 +10,16 @@ MongoClient.connect('mongodb://localhost:27017/ToDoApp', (err, db) => {
     }
     console.log("Connected to MongoDB server");
 
-    db.collection('Users').find().toArray().then((docs) => {
-        console.log("Todos");
-        console.log(JSON.stringify(docs, undefined, 2));
-    }, (err) => {
-        return console.log("Unable to fetch todos", err);
+    // db.collection('Todos').deleteMany({ text: "Eat lunch" }).then((result) => {
+    //     console.log(result);
+    // }, (err) => {
+    //     return console.log("Unable to delete todos", err);
+    // });
 
+    db.collection('Todos').findOneAndDelete({ completed: false }).then((result) => {
+        console.log(result);
+    }, (err) => {
+        return console.log("Unable to delete todos", err);
     });
 
     // db.close();
